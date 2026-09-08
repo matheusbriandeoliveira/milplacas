@@ -119,14 +119,22 @@ function App() {
   const [isPreloaderLeaving, setIsPreloaderLeaving] = useState(false)
 
   useEffect(() => {
+    const minimumPreloaderTime = 2000
+    const startedAt = performance.now()
     let frameId = 0
+    let exitTimer = 0
     let fadeTimer = 0
 
-    const finishLoading = () => {
+    const startExit = () => {
       frameId = requestAnimationFrame(() => {
         setIsPreloaderLeaving(true)
         fadeTimer = window.setTimeout(() => setIsPreloaderVisible(false), 520)
       })
+    }
+
+    const finishLoading = () => {
+      const elapsed = performance.now() - startedAt
+      exitTimer = window.setTimeout(startExit, Math.max(0, minimumPreloaderTime - elapsed))
     }
 
     if (document.readyState === 'complete') {
@@ -138,6 +146,7 @@ function App() {
     return () => {
       window.removeEventListener('load', finishLoading)
       cancelAnimationFrame(frameId)
+      window.clearTimeout(exitTimer)
       window.clearTimeout(fadeTimer)
     }
   }, [])
