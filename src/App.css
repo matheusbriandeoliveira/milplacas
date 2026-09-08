@@ -155,24 +155,27 @@
   list-style: none;
 }
 
+.client-trust__logo-viewport {
+  width: 100%;
+}
+
 .client-trust__logos li {
   display: grid;
   flex: 0 0 auto;
   place-items: center;
-  width: clamp(3.5rem, 4.9vw, 4.4rem);
+  width: clamp(4rem, 5.3vw, 5rem);
   aspect-ratio: 1;
-  padding: 0.48rem;
+  padding: 0.52rem;
   border-radius: 0.8rem;
   background: #fff;
   box-shadow: 0 0.2rem 0.65rem rgba(0, 0, 0, 0.035);
   transform: scale(1);
-  transition: transform 260ms cubic-bezier(0.2, 0.75, 0.25, 1), box-shadow 260ms ease;
+  transition: transform 280ms cubic-bezier(0.2, 0.75, 0.25, 1), box-shadow 280ms ease;
+  position: relative;
 }
 
-.client-trust__logos li:hover {
-  z-index: 1;
-  box-shadow: 0 0.65rem 1.5rem rgba(0, 0, 0, 0.1);
-  transform: scale(1.12);
+.client-trust__logos li:nth-child(n + 11) {
+  display: none;
 }
 
 .client-trust__logos img {
@@ -181,6 +184,44 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+.client-trust__logo-name {
+  position: absolute;
+  top: calc(100% + 0.55rem);
+  left: 50%;
+  color: #3d3d3b;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -0.25rem);
+  transition: opacity 180ms ease, transform 220ms ease;
+  white-space: nowrap;
+}
+
+@media (min-width: 701px) {
+  .client-trust__logos li.is-active {
+    z-index: 2;
+    box-shadow: 0 0.8rem 1.65rem rgba(0, 0, 0, 0.12);
+    transform: translateY(-0.55rem) scale(1.16);
+  }
+
+  .client-trust__logos li.is-neighbor {
+    z-index: 1;
+    box-shadow: 0 0.5rem 1.15rem rgba(0, 0, 0, 0.07);
+    transform: translateY(-0.28rem) scale(1.08);
+  }
+
+  .client-trust__logos li.is-near {
+    transform: translateY(-0.12rem) scale(1.035);
+  }
+
+  .client-trust__logos li.is-active .client-trust__logo-name {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
 }
 
 .client-trust__title strong {
@@ -932,10 +973,23 @@
 
   .client-trust__logos {
     gap: 0.55rem;
-    margin: 1.75rem auto;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: max-content;
+    max-width: none;
+    margin: 1.75rem 0;
+    animation: client-logo-carousel 24s linear infinite;
+  }
+
+  .client-trust__logo-viewport {
+    width: 100vw;
+    margin-right: calc(50% - 50vw);
+    margin-left: calc(50% - 50vw);
+    overflow: hidden;
   }
 
   .client-trust__logos li {
+    display: grid;
     width: 3.2rem;
     padding: 0.42rem;
     border-radius: 0.7rem;
@@ -943,6 +997,10 @@
 
   .client-trust__description {
     margin-top: 3.5rem;
+  }
+
+  .client-trust__logo-name {
+    display: none;
   }
 
   .structure {
@@ -1026,6 +1084,18 @@
     gap: 2rem;
   }
 
+}
+
+@keyframes client-logo-carousel {
+  to {
+    transform: translateX(calc(-50% - 0.275rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .client-trust__logos {
+    animation: none;
+  }
 }
 
 @media (max-width: 520px) {

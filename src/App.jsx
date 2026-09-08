@@ -114,6 +114,7 @@ function App() {
   const featuredProjectsRef = useRef(null)
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeClientIndex, setActiveClientIndex] = useState(null)
 
   useEffect(() => {
     const section = featuredProjectsRef.current
@@ -271,13 +272,31 @@ function App() {
             <BlurText text="Empresas que" />
           </h2>
 
-          <ul className="client-trust__logos" aria-label="Clientes Milplacas">
-            {clientLogos.map((client) => (
-              <li key={client.name}>
-                <img src={client.image} alt={client.name} />
-              </li>
-            ))}
-          </ul>
+          <div className="client-trust__logo-viewport">
+            <ul
+              className="client-trust__logos"
+              aria-label="Clientes Milplacas"
+              onMouseLeave={() => setActiveClientIndex(null)}
+            >
+              {[...clientLogos, ...clientLogos].map((client, index) => {
+                const clientIndex = index % clientLogos.length
+                const distance = activeClientIndex === null ? null : Math.abs(clientIndex - activeClientIndex)
+                const dockClass = distance === 0 ? 'is-active' : distance === 1 ? 'is-neighbor' : distance === 2 ? 'is-near' : ''
+
+                return (
+                <li
+                  className={dockClass}
+                  key={`${client.name}-${index}`}
+                  aria-hidden={index >= clientLogos.length}
+                  onMouseEnter={() => setActiveClientIndex(clientIndex)}
+                >
+                  <img src={client.image} alt={index < clientLogos.length ? client.name : ''} />
+                  <span className="client-trust__logo-name">{client.name}</span>
+                </li>
+                )
+              })}
+            </ul>
+          </div>
 
           <p className="client-trust__title">
             <BlurText text="Confiam na" /><strong><BlurText text="Milplacas" /></strong>
