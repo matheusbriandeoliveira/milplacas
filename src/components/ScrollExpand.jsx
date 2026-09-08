@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import './ScrollExpand.css'
 
@@ -11,6 +11,7 @@ const smoothstep = (edge0, edge1, value) => {
 
 export default function ScrollExpand({
   src = '',
+  mobileSrc = '',
   mediaType = 'image',
   poster = '',
   alt = '',
@@ -41,6 +42,7 @@ export default function ScrollExpand({
   const overlayRef = useRef(null)
   const scrimRef = useRef(null)
   const hintRef = useRef(null)
+  const [usesMobileSource, setUsesMobileSource] = useState(false)
   const propsRef = useRef({
     startWidth,
     startHeight,
@@ -82,6 +84,17 @@ export default function ScrollExpand({
     startWidth,
     useWindowScroll,
   ])
+
+  useEffect(() => {
+    if (!mobileSrc) return undefined
+
+    const mediaQuery = window.matchMedia('(max-width: 700px)')
+    const updateSource = () => setUsesMobileSource(mediaQuery.matches)
+    updateSource()
+    mediaQuery.addEventListener('change', updateSource)
+
+    return () => mediaQuery.removeEventListener('change', updateSource)
+  }, [mobileSrc])
 
   const applyProgress = useCallback((progress) => {
     const frame = frameRef.current
@@ -217,7 +230,7 @@ export default function ScrollExpand({
       <video
         ref={mediaRef}
         className="scroll-expand__media"
-        src={src}
+        src={usesMobileSource ? mobileSrc : src}
         poster={poster}
         autoPlay
         muted

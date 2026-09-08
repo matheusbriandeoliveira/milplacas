@@ -113,6 +113,7 @@ const smoothstep = (value) => {
 function App() {
   const featuredProjectsRef = useRef(null)
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const section = featuredProjectsRef.current
@@ -176,9 +177,26 @@ function App() {
             <img src="/LogoMilplacasWeb.svg" alt="Milplacas" />
           </a>
 
-          <nav className="header__nav" aria-label="Navegação principal">
+          <button
+            type="button"
+            className={`header__menu-button ${isMobileMenuOpen ? 'is-open' : ''}`}
+            aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+
+          <nav
+            className={`header__nav ${isMobileMenuOpen ? 'is-open' : ''}`}
+            id="mobile-navigation"
+            aria-label="Navegação principal"
+          >
             {navigation.map((item) => (
-              <a href={item.href} key={item.label}>
+              <a href={item.href} key={item.label} onClick={() => setIsMobileMenuOpen(false)}>
                 {item.label}
               </a>
             ))}
@@ -204,6 +222,7 @@ function App() {
       <section className="projects-showcase" aria-label="Projetos em destaque">
         <ScrollExpand
           src="/videoHero.mp4"
+          mobileSrc="/videoHeroMobile.mp4"
           mediaType="video"
           scrollHint="Role para explorar"
           startWidth={70}
