@@ -115,6 +115,32 @@ function App() {
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeClientIndex, setActiveClientIndex] = useState(null)
+  const [isPreloaderVisible, setIsPreloaderVisible] = useState(true)
+  const [isPreloaderLeaving, setIsPreloaderLeaving] = useState(false)
+
+  useEffect(() => {
+    let frameId = 0
+    let fadeTimer = 0
+
+    const finishLoading = () => {
+      frameId = requestAnimationFrame(() => {
+        setIsPreloaderLeaving(true)
+        fadeTimer = window.setTimeout(() => setIsPreloaderVisible(false), 520)
+      })
+    }
+
+    if (document.readyState === 'complete') {
+      finishLoading()
+    } else {
+      window.addEventListener('load', finishLoading, { once: true })
+    }
+
+    return () => {
+      window.removeEventListener('load', finishLoading)
+      cancelAnimationFrame(frameId)
+      window.clearTimeout(fadeTimer)
+    }
+  }, [])
 
   useEffect(() => {
     const section = featuredProjectsRef.current
@@ -164,7 +190,19 @@ function App() {
   }, [])
 
   return (
-    <main className="home">
+    <>
+      {isPreloaderVisible && (
+        <div
+          className={`preloader ${isPreloaderLeaving ? 'is-leaving' : ''}`}
+          role="status"
+          aria-label="Carregando site Milplacas"
+        >
+          <div className="preloader__glow" aria-hidden="true" />
+          <img className="preloader__logo" src="/LogoMilplacasWeb.svg" alt="" />
+        </div>
+      )}
+
+      <main className="home" aria-busy={isPreloaderVisible}>
       <section className="hero" aria-labelledby="hero-title">
         <Aurora
           colorStops={['#F43F5E', '#F43F5E', '#5227FF']}
@@ -444,7 +482,8 @@ function App() {
           </a>
         </div>
       </footer>
-    </main>
+      </main>
+    </>
   )
 }
 
