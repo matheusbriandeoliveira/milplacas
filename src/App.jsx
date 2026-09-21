@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 
 import './App.css'
-import Aurora from './components/Aurora.jsx'
+import HeroSlider from './components/HeroSlider.jsx'
+import SolutionsMenu from './components/SolutionsMenu.jsx'
 import BlurText from './components/BlurText.jsx'
 import ScrollExpand from './components/ScrollExpand.jsx'
 
 const navigation = [
   { label: 'Projetos', href: '#projetos' },
   { label: 'Clientes', href: '#clientes' },
-  { label: 'FAQ', href: '#faq' },
 ]
 
 const featuredProjects = [
@@ -45,6 +45,10 @@ const clientLogos = [
   { name: 'Boulevard Marília Shopping', image: '/Boulevard Marília Shopping.svg' },
   { name: 'Sesi', image: '/Sesi.svg' },
   { name: 'Conti', image: '/Conti.svg' },
+  { name: 'Ribeiro Caram', image: '/Ribeiro Caram.svg' },
+  { name: 'Equinix', image: '/Equinix.svg' },
+  { name: 'Engemon', image: '/Engemon.svg' },
+  { name: 'Imprej', image: '/Imprej.svg' },
 ]
 
 const structureHighlights = [
@@ -212,13 +216,7 @@ function App() {
       )}
 
       <main className="home" aria-busy={isPreloaderVisible}>
-      <section className="hero" aria-labelledby="hero-title">
-        <Aurora
-          colorStops={['#F43F5E', '#F43F5E', '#5227FF']}
-          blend={0.5}
-          amplitude={1.0}
-          speed={1}
-        />
+      <HeroSlider ready={!isPreloaderVisible}>
 
         <header className="header">
           <a className="header__brand" href="#inicio" aria-label="Milplacas — início">
@@ -248,24 +246,11 @@ function App() {
                 {item.label}
               </a>
             ))}
+            <SolutionsMenu onNavigate={() => setIsMobileMenuOpen(false)} />
           </nav>
         </header>
 
-        <div className="hero__content" id="inicio">
-          <h1 id="hero-title" className="hero__title">
-            <span><BlurText text="Fachadas que" /></span>
-            <span className="hero__title--muted"><BlurText text="transformam ideias" /></span>
-            <span>
-              <BlurText text="ambiciosas em" /><em><BlurText text="presença." /></em>
-            </span>
-          </h1>
-
-          <p className="hero__description">
-            Projetamos e executamos soluções que unem acabamento, desempenho e a
-            força visual que o seu projeto merece.
-          </p>
-        </div>
-      </section>
+      </HeroSlider>
 
       <section className="projects-showcase" aria-label="Projetos em destaque">
         <ScrollExpand
@@ -316,7 +301,7 @@ function App() {
       <section className="client-trust" id="clientes" aria-labelledby="client-trust-title">
         <div className="client-trust__inner">
           <h2 id="client-trust-title" className="client-trust__eyebrow">
-            <BlurText text="Empresas que" />
+            <BlurText text="Grandes projetos exigem" />
           </h2>
 
           <div className="client-trust__logo-viewport">
@@ -346,11 +331,11 @@ function App() {
           </div>
 
           <p className="client-trust__title">
-            <BlurText text="Confiam na" /><strong><BlurText text="Milplacas" /></strong>
+            <BlurText text="Grandes" />{' '}<strong><BlurText text="Parceiros" /></strong>
           </p>
           <p className="client-trust__description">
-            Atendemos empresas com soluções completas em fachadas, esquadrias e
-            revestimentos de alto padrão.
+            Empresas que confiaram na qualidade, experiência e compromisso da
+            Milplacas para transformar seus projetos em realidade.
           </p>
         </div>
       </section>

@@ -1,0 +1,91 @@
+.anniversary-hero .header__nav > a,
+.solutions-menu__trigger {
+  font-size: 0.9rem;
+}
+.solutions-menu { position: relative; }
+.solutions-menu__trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.75rem 0;
+  border: 0;
+  background: transparent;
+  color: rgba(246, 245, 243, 0.9);
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+.solutions-menu__trigger:hover,
+.solutions-menu.is-open .solutions-menu__trigger { color: #ef3b3b; }
+.anniversary-hero .header__nav {
+  gap: 0.25rem;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 2rem;
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+.anniversary-hero .header__nav > a,
+.anniversary-hero .solutions-menu__trigger {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  background: transparent;
+  line-height: 1.3;
+  transition: color 180ms ease;
+}
+.anniversary-hero .header__nav > a:hover,
+.anniversary-hero .solutions-menu__trigger:hover,
+.anniversary-hero .solutions-menu.is-open .solutions-menu__trigger {
+  color: #ef3b3b;
+}
+.solutions-menu__dropdown {
+  position: absolute;
+  top: 100%;
+  left: -1rem;
+  width: 17rem;
+  padding: 0.6rem;
+  border: 1px solid #ffffff1c;
+  border-radius: 0.5rem;
+  background: #101112;
+  box-shadow: 0 1rem 2.5rem #0005;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+}
+.solutions-menu.is-open .solutions-menu__dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.anniversary-hero .solutions-menu__dropdown a {
+  display: block;
+  padding: 0.8rem 0.75rem;
+  border-radius: 0.25rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  transition: background 180ms ease, color 180ms ease;
+}
+.solutions-menu__dropdown a:hover { background: #ffffff09; }
+@media (max-width: 700px) {
+  .solutions-menu { width: 100%; }
+  .solutions-menu__trigger { width: 100%; justify-content: space-between; }
+  .solutions-menu__dropdown { position: static; width: 100%; display: none; margin-bottom: 0.5rem; box-shadow: none; }
+  .solutions-menu.is-open .solutions-menu__dropdown { display: block; }
+  .anniversary-hero .header__nav {
+    max-height: calc(100svh - 6rem);
+    overflow-y: auto;
+    border-radius: 0.85rem;
+    background: rgba(8, 8, 8, 0.92);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .solutions-menu__dropdown { transition: none; }
+}

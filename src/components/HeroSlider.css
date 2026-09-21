@@ -1,0 +1,154 @@
+.anniversary-hero {
+  --page-padding: clamp(1.5rem, 4vw, 4.5rem);
+  --hero-content-inset: clamp(2rem, 6vw, 7rem);
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  color: #fff;
+  background: #090909;
+}
+
+.anniversary-hero__slides {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.anniversary-hero__slides img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1200ms ease-in-out;
+}
+
+.anniversary-hero__slides img.is-active { opacity: 1; }
+
+.anniversary-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg, #0007, transparent 30%);
+}
+
+.anniversary-hero > .header { position: absolute; inset: 0 0 auto; }
+
+.anniversary-hero__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 40%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 8rem var(--page-padding) 7rem;
+  padding-left: var(--hero-content-inset);
+  background: linear-gradient(90deg, rgba(8, 10, 11, 0.82) 0%, rgba(8, 10, 11, 0.76) 75%, transparent 100%);
+}
+
+.anniversary-hero__content h1 { margin: 0; font-weight: 500; }
+.anniversary-hero__number {
+  display: block;
+  font-size: clamp(7rem, 13vw, 16rem);
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.85;
+}
+.anniversary-hero__years {
+  display: block;
+  width: fit-content;
+  min-width: 2.5em;
+  margin: 0.25rem 0 1rem;
+  padding: 0.08em 0 0.12em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  text-align: center;
+  line-height: 1.1;
+  font-size: clamp(2rem, 3vw, 3.5rem);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+}
+.anniversary-hero__statement {
+  display: block;
+  font-size: clamp(1rem, 1.8vw, 2.15rem);
+  line-height: 1.4;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.anniversary-hero__statement em { color: #ef3b3b; font-style: normal; }
+.anniversary-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding: 1rem 1.35rem;
+  background: #ef3b3b;
+  color: white;
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 200ms ease;
+}
+.anniversary-hero__cta:hover { background: #d92d2d; }
+.anniversary-hero__cta span { font-size: 1.3rem; line-height: 1; }
+.anniversary-hero__controls {
+  position: absolute;
+  bottom: 2rem;
+  left: var(--hero-content-inset);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.anniversary-hero__controls button {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: white;
+  font: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.anniversary-hero__dots { display: flex; margin-left: 0.5rem; }
+.anniversary-hero__dots button { width: 1.8rem; }
+.anniversary-hero__dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff60;
+  transition: background 250ms ease, transform 250ms ease;
+}
+.anniversary-hero__dots [aria-current] span { background: white; transform: scale(1.4); }
+.anniversary-hero button:focus-visible,
+.anniversary-hero__cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+@media (min-width: 701px) and (max-width: 1000px) {
+  .anniversary-hero__panel { width: 44%; }
+}
+@media (max-width: 700px) {
+  .anniversary-hero__panel {
+    width: 100%;
+    padding-top: 7.5rem;
+    background: linear-gradient(90deg, #080a0bbd, #080a0b80);
+  }
+  .anniversary-hero__number { font-size: clamp(7rem, 28vw, 11rem); }
+  .anniversary-hero__years { font-size: 2.25rem; }
+  .anniversary-hero__statement { font-size: clamp(1.25rem, 5vw, 1.8rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .anniversary-hero__slides img,
+  .anniversary-hero__dots span { transition: none; }
+}

@@ -129,7 +129,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: min(100%, 68rem);
+  width: min(100%, 90rem);
   margin: 0 auto;
   text-align: center;
 }
@@ -174,7 +174,7 @@
   position: relative;
 }
 
-.client-trust__logos li:nth-child(n + 11) {
+.client-trust__logos li[aria-hidden="true"] {
   display: none;
 }
 
@@ -225,13 +225,17 @@
 }
 
 .client-trust__title strong {
-  color: #f05146;
+  color: #ef3b3b;
   font: inherit;
+}
+
+.client-trust__title {
+  margin-top: 0.2em;
 }
 
 .client-trust__description {
   max-width: 25rem;
-  margin: clamp(3.7rem, 7.3vw, 7rem) 0 0;
+  margin: clamp(1.25rem, 2vw, 2rem) 0 0;
   color: #737375;
   font-size: clamp(0.85rem, 1.1vw, 1rem);
   letter-spacing: -0.025em;
@@ -995,8 +999,12 @@
     border-radius: 0.7rem;
   }
 
+  .client-trust__logos li[aria-hidden="true"] {
+    display: grid;
+  }
+
   .client-trust__description {
-    margin-top: 3.5rem;
+    margin-top: 1.25rem;
   }
 
   .client-trust__logo-name {
