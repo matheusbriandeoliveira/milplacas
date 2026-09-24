@@ -18,7 +18,7 @@
   transition: color 180ms ease;
 }
 .solutions-menu__trigger:hover,
-.solutions-menu.is-open .solutions-menu__trigger { color: #ef3b3b; }
+.solutions-menu.is-open .solutions-menu__trigger { color: #fff; }
 .anniversary-hero .header__nav {
   gap: 0.25rem;
   padding: 0.2rem 0.45rem;
@@ -43,7 +43,7 @@
 .anniversary-hero .header__nav > a:hover,
 .anniversary-hero .solutions-menu__trigger:hover,
 .anniversary-hero .solutions-menu.is-open .solutions-menu__trigger {
-  color: #ef3b3b;
+  color: #fff;
 }
 .solutions-menu__dropdown {
   position: absolute;

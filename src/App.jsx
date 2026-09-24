@@ -8,6 +8,7 @@ import ScrollExpand from './components/ScrollExpand.jsx'
 
 const navigation = [
   { label: 'Projetos', href: '#projetos' },
+  { label: 'Residencial', href: '#projetos' },
   { label: 'Clientes', href: '#clientes' },
 ]
 
@@ -41,10 +42,8 @@ const clientLogos = [
   { name: 'Coca-Cola', image: '/CocaCola.svg' },
   { name: 'Jacto', image: '/Jacto.svg' },
   { name: 'Marilan', image: '/Marilan.svg' },
-  { name: 'Rodonaves', image: '/Rodonaves.svg' },
   { name: 'Boulevard Marília Shopping', image: '/Boulevard Marília Shopping.svg' },
   { name: 'Sesi', image: '/Sesi.svg' },
-  { name: 'Conti', image: '/Conti.svg' },
   { name: 'Ribeiro Caram', image: '/Ribeiro Caram.svg' },
   { name: 'Equinix', image: '/Equinix.svg' },
   { name: 'Engemon', image: '/Engemon.svg' },
@@ -71,10 +70,10 @@ const structureHighlights = [
     alt: 'Operador Milplacas acompanhando uma máquina de produção',
   },
   {
-    title: 'Logística integrada',
-    description: 'Planejamento e distribuição que dão agilidade a cada etapa.',
-    image: '/ImgLogistica.png',
-    alt: 'Centro de logística com empilhadeira e materiais organizados',
+    title: 'Execução própria',
+    description: 'Equipe e estrutura próprias para garantir controle, qualidade e precisão em cada etapa.',
+    image: '/execucao.png',
+    alt: 'Execução própria da Milplacas',
   },
   {
     title: 'Assistência especializada',
@@ -348,7 +347,7 @@ function App() {
               <BlurText text="Estrutura, Tecnologia e Experiência para" /><em><BlurText text="Grandes Projetos." /></em>
             </h2>
             <p>
-              Unimos conhecimento técnico, capacidade industrial e proximidade para
+              Unimos conhecimento técnico e capacidade industrial para
               entregar soluções completas em cada detalhe.
             </p>
           </div>
