@@ -381,14 +381,17 @@ function App() {
           <div className="final-cta__main">
             <p className="final-cta__label">Vamos juntos?</p>
             <h2 id="final-cta-title">
-              <span><BlurText text="Vamos tornar" /></span>
-              <span><BlurText text="sua" /><em><BlurText text="marca" /></em></span>
-              <span><BlurText text="impossível de ignorar" /><span className="final-cta__period"><BlurText text="." animateBy="letters" /></span></span>
+              <span><BlurText text="Seu próximo" /></span>
+              <span><em><BlurText text="grande projeto" /></em></span>
+              <span><BlurText text="começa aqui" /><span className="final-cta__period"><BlurText text="." animateBy="letters" /></span></span>
             </h2>
           </div>
 
           <div className="final-cta__contact">
-            <p>Conte onde sua marca precisa aparecer. Organizamos o ponto de partida juntos.</p>
+            <p>
+              <strong>Conte sobre o seu projeto.</strong><br />
+              <strong>Nossa equipe ajuda a transformar a necessidade em uma solução técnica completa.</strong>
+            </p>
             <a
               className="final-cta__button"
               href="https://wa.me/5514997192223"
