@@ -120,6 +120,7 @@ function App() {
   const homePrefix = isSolutionsPage ? '/' : ''
   const featuredProjectsRef = useRef(null)
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
+  const [footerSolutionsOpen, setFooterSolutionsOpen] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeClientIndex, setActiveClientIndex] = useState(null)
   const [isPreloaderVisible, setIsPreloaderVisible] = useState(true)
@@ -480,13 +481,20 @@ function App() {
             <img src="/LogoMilplacasWeb.svg" alt="Milplacas" />
           </div>
 
-          <nav className="site-footer__column" aria-labelledby="footer-solutions-title">
+          <nav className={`site-footer__column site-footer__solutions${footerSolutionsOpen ? ' is-open' : ''}`} aria-labelledby="footer-solutions-title">
             <h2 id="footer-solutions-title">Soluções</h2>
+            <button className="site-footer__solutions-toggle" type="button"
+              aria-expanded={footerSolutionsOpen} aria-controls="footer-solutions-links"
+              onClick={() => setFooterSolutionsOpen((value) => !value)}>
+              Soluções <span aria-hidden="true">{footerSolutionsOpen ? '−' : '+'}</span>
+            </button>
+            <div className="site-footer__solutions-links" id="footer-solutions-links">
             <a href="/solucoes#fachadas-em-acm">Fachadas em ACM</a>
             <a href="/solucoes#pele-de-vidro">Pele de Vidro / Glazing</a>
             <a href="/solucoes#esquadrias-de-aluminio">Esquadrias de Alumínio</a>
             <a href="/solucoes#comunicacao-visual">Comunicação Visual</a>
             <a href="/solucoes#homenagens-corporativas">Homenagens Corporativas</a>
+            </div>
           </nav>
 
           <div className="site-footer__column">
