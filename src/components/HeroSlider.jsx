@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './HeroSlider.css'
 import BlurText from './BlurText.jsx'
 
-const defaultSlides = ['/bcg1.png', '/bcg2.png', '/bcg3.png']
+const defaultSlides = ['/images/hero/bcg1.png', '/images/hero/bcg2.png', '/images/hero/bcg3.png']
 
 export default function HeroSlider({ children, ready = true, projectsHref = '#projetos', slides = defaultSlides, residential = false }) {
   const [active, setActive] = useState(0)

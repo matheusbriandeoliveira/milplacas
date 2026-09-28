@@ -19,76 +19,76 @@ const navigation = [
 const featuredProjects = [
   {
     name: 'Datta - Jacto',
-    image: '/datta-jacto.png',
+    image: '/images/projects/datta-jacto.png',
     alt: 'Vista aérea da fachada Datta - Jacto',
   },
   {
     name: 'Equinix',
-    image: '/EquinixFachada.png',
+    image: '/images/projects/EquinixFachada.png',
     alt: 'Fachada da Equinix',
   },
   {
     name: 'Shopping Boulevard',
-    image: '/boulevard.png',
+    image: '/images/projects/boulevard.png',
     alt: 'Entrada iluminada do Shopping Boulevard',
   },
   {
     name: 'Citap',
-    image: '/citap.png',
+    image: '/images/projects/citap.png',
     alt: 'Fachada do Citap',
   },
 ]
 
 const clientLogos = [
-  { name: 'Comasa', image: '/Comasa.svg' },
-  { name: 'Cocipa', image: '/Cocipa.svg' },
-  { name: 'Dori', image: '/Dori.svg' },
-  { name: 'Coca-Cola', image: '/CocaCola.svg' },
-  { name: 'Jacto', image: '/Jacto.svg' },
-  { name: 'Marilan', image: '/Marilan.svg' },
-  { name: 'Boulevard Marília Shopping', image: '/Boulevard Marília Shopping.svg' },
-  { name: 'Sesi', image: '/Sesi.svg' },
-  { name: 'Ribeiro Caram', image: '/Ribeiro Caram.svg' },
-  { name: 'Equinix', image: '/Equinix.svg' },
-  { name: 'Engemon', image: '/Engemon.svg' },
-  { name: 'Imprej', image: '/Imprej.svg' },
+  { name: 'Comasa', image: '/images/clients/Comasa.svg' },
+  { name: 'Cocipa', image: '/images/clients/Cocipa.svg' },
+  { name: 'Dori', image: '/images/clients/Dori.svg' },
+  { name: 'Coca-Cola', image: '/images/clients/CocaCola.svg' },
+  { name: 'Jacto', image: '/images/clients/Jacto.svg' },
+  { name: 'Marilan', image: '/images/clients/Marilan.svg' },
+  { name: 'Boulevard Marília Shopping', image: '/images/clients/Boulevard Marília Shopping.svg' },
+  { name: 'Sesi', image: '/images/clients/Sesi.svg' },
+  { name: 'Ribeiro Caram', image: '/images/clients/Ribeiro Caram.svg' },
+  { name: 'Equinix', image: '/images/clients/Equinix.svg' },
+  { name: 'Engemon', image: '/images/clients/Engemon.svg' },
+  { name: 'Imprej', image: '/images/clients/Imprej.svg' },
 ]
 
 const structureHighlights = [
   {
     title: 'Projetos sob medida',
     description: 'Soluções pensadas para traduzir a identidade de cada projeto.',
-    image: '/ImgProjetos.png',
+    image: '/images/structure/ImgProjetos.png',
     alt: 'Equipe Milplacas reunida em torno de um projeto técnico',
   },
   {
     title: 'Infraestrutura fabril',
     description: 'Tecnologia de ponta para transformar precisão em acabamento.',
-    image: '/ImgInfraEstruturaFabril.png',
+    image: '/images/structure/ImgInfraEstruturaFabril.png',
     alt: 'Equipamento de corte a laser em operação',
   },
   {
     title: 'Capacidade produtiva',
     description: 'Processos integrados para atender demandas de diferentes escalas.',
-    image: '/ImgCapacidadeProdutiva.png',
+    image: '/images/structure/ImgCapacidadeProdutiva.png',
     alt: 'Operador Milplacas acompanhando uma máquina de produção',
   },
   {
     title: 'Execução própria',
     description: 'Equipe e estrutura próprias para garantir controle, qualidade e precisão em cada etapa.',
-    image: '/execucao.png',
+    image: '/images/structure/execucao.png',
     alt: 'Execução própria da Milplacas',
   },
   {
     title: 'Assistência especializada',
     description: 'Atendimento próximo do desenvolvimento ao pós-obra.',
-    image: '/ImgAssistencia.png',
+    image: '/images/structure/ImgAssistencia.png',
     alt: 'Equipe Milplacas analisando uma planta de projeto',
   },
   {
     title: 'Grandes projetos',
     description: 'Experiência aplicada a fachadas que unem desempenho e presença.',
-    image: '/GrandesProjetos.png',
+    image: '/images/structure/GrandesProjetos.png',
     alt: 'Projeto de grande porte executado pela Milplacas',
   },
 ]
@@ -228,7 +228,7 @@ function App() {
           aria-label="Carregando site Milplacas"
         >
           <div className="preloader__glow" aria-hidden="true" />
-          <img className="preloader__logo" src="/LogoMilplacasWeb.svg" alt="" />
+          <img className="preloader__logo" src="/brand/LogoMilplacasWeb.svg" alt="" />
         </div>
       )}
 
@@ -237,7 +237,7 @@ function App() {
 
         <header className="header">
           <a className="header__brand" href={`${homePrefix}#inicio`} aria-label="Milplacas — início">
-            <img src="/LogoMilplacasWeb.svg" alt="Milplacas" />
+            <img src="/brand/LogoMilplacasWeb.svg" alt="Milplacas" />
           </a>
 
           <button
@@ -274,8 +274,8 @@ function App() {
       {!isSolutionsPage && !isResidentialPage && <>
       <section className="projects-showcase" aria-label="Projetos em destaque">
         <ScrollExpand
-          src="/videoHero.mp4"
-          mobileSrc="/videoHeroMobile.mp4"
+          src="/videos/videoHero.mp4"
+          mobileSrc="/videos/videoHeroMobile.mp4"
           mediaType="video"
           scrollHint="Role para explorar"
           startWidth={70}
@@ -483,7 +483,7 @@ function App() {
       <footer className="site-footer">
         <div className="site-footer__inner">
           <div className="site-footer__brand">
-            <img src="/LogoMilplacasWeb.svg" alt="Milplacas" />
+            <img src="/brand/LogoMilplacasWeb.svg" alt="Milplacas" />
           </div>
 
           <nav className={`site-footer__column site-footer__solutions${footerSolutionsOpen ? ' is-open' : ''}`} aria-labelledby="footer-solutions-title">
