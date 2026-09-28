@@ -2,14 +2,16 @@ import { useEffect, useRef, useState } from 'react'
 
 import './App.css'
 import HeroSlider from './components/HeroSlider.jsx'
+import SolutionsSections from './components/SolutionsSections.jsx'
 import SolutionsMenu from './components/SolutionsMenu.jsx'
 import BlurText from './components/BlurText.jsx'
 import ScrollExpand from './components/ScrollExpand.jsx'
+import BackToTop from './components/BackToTop.jsx'
 
 const navigation = [
   { label: 'Projetos', href: '#projetos' },
-  { label: 'Residencial', href: '#projetos' },
   { label: 'Clientes', href: '#clientes' },
+  { label: 'Residencial', href: '#projetos' },
 ]
 
 const featuredProjects = [
@@ -19,9 +21,9 @@ const featuredProjects = [
     alt: 'Vista aérea da fachada Datta - Jacto',
   },
   {
-    name: 'Rodonaves',
-    image: '/rodonaves.png',
-    alt: 'Fachada azul da Rodonaves',
+    name: 'Equinix',
+    image: '/EquinixFachada.png',
+    alt: 'Fachada da Equinix',
   },
   {
     name: 'Shopping Boulevard',
@@ -114,6 +116,8 @@ const smoothstep = (value) => {
 }
 
 function App() {
+  const isSolutionsPage = window.location.pathname.replace(/\/$/, '') === '/solucoes'
+  const homePrefix = isSolutionsPage ? '/' : ''
   const featuredProjectsRef = useRef(null)
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -122,7 +126,16 @@ function App() {
   const [isPreloaderLeaving, setIsPreloaderLeaving] = useState(false)
 
   useEffect(() => {
-    const minimumPreloaderTime = 2000
+    if (!isSolutionsPage || isPreloaderVisible || !window.location.hash) return
+    const section = document.getElementById(window.location.hash.slice(1))
+    section?.scrollIntoView({
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'start',
+    })
+  }, [isSolutionsPage, isPreloaderVisible])
+
+  useEffect(() => {
+    const minimumPreloaderTime = isSolutionsPage ? 500 : 2000
     const startedAt = performance.now()
     let frameId = 0
     let exitTimer = 0
@@ -152,7 +165,7 @@ function App() {
       window.clearTimeout(exitTimer)
       window.clearTimeout(fadeTimer)
     }
-  }, [])
+  }, [isSolutionsPage])
 
   useEffect(() => {
     const section = featuredProjectsRef.current
@@ -215,10 +228,10 @@ function App() {
       )}
 
       <main className="home" aria-busy={isPreloaderVisible}>
-      <HeroSlider ready={!isPreloaderVisible}>
+      <HeroSlider ready={!isPreloaderVisible} projectsHref={`${homePrefix}#projetos`}>
 
         <header className="header">
-          <a className="header__brand" href="#inicio" aria-label="Milplacas — início">
+          <a className="header__brand" href={`${homePrefix}#inicio`} aria-label="Milplacas — início">
             <img src="/LogoMilplacasWeb.svg" alt="Milplacas" />
           </a>
 
@@ -241,7 +254,7 @@ function App() {
             aria-label="Navegação principal"
           >
             {navigation.map((item) => (
-              <a href={item.href} key={item.label} onClick={() => setIsMobileMenuOpen(false)}>
+              <a href={`${homePrefix}${item.href}`} key={item.label} onClick={() => setIsMobileMenuOpen(false)}>
                 {item.label}
               </a>
             ))}
@@ -250,7 +263,9 @@ function App() {
         </header>
 
       </HeroSlider>
+      {isSolutionsPage && <SolutionsSections />}
 
+      {!isSolutionsPage && <>
       <section className="projects-showcase" aria-label="Projetos em destaque">
         <ScrollExpand
           src="/videoHero.mp4"
@@ -457,13 +472,25 @@ function App() {
         </div>
       </section>
 
+      </>}
+
       <footer className="site-footer">
         <div className="site-footer__inner">
           <div className="site-footer__brand">
             <img src="/LogoMilplacasWeb.svg" alt="Milplacas" />
-            <p>© 2026 Milplacas. Todos os direitos reservados.</p>
           </div>
 
+          <nav className="site-footer__column" aria-labelledby="footer-solutions-title">
+            <h2 id="footer-solutions-title">Soluções</h2>
+            <a href="/solucoes#fachadas-em-acm">Fachadas em ACM</a>
+            <a href="/solucoes#pele-de-vidro">Pele de Vidro / Glazing</a>
+            <a href="/solucoes#esquadrias-de-aluminio">Esquadrias de Alumínio</a>
+            <a href="/solucoes#comunicacao-visual">Comunicação Visual</a>
+            <a href="/solucoes#homenagens-corporativas">Homenagens Corporativas</a>
+          </nav>
+
+          <div className="site-footer__column">
+            <h2>Contato</h2>
           <a
             className="site-footer__contact"
             href="https://wa.me/5514997192223"
@@ -476,9 +503,34 @@ function App() {
             </svg>
             <span>(14) 99719-2223</span>
           </a>
+          </div>
+
+          <div className="site-footer__column">
+            <h2>Redes Sociais</h2>
+            <div className="site-footer__social-links">
+            <a className="site-footer__instagram" href="https://www.instagram.com/mil.placas.oficial/"
+              target="_blank" rel="noopener noreferrer" aria-label="Instagram oficial da Milplacas">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </a>
+            <a className="site-footer__facebook" href="https://www.facebook.com/milplacasoficial/"
+              target="_blank" rel="noopener noreferrer" aria-label="Facebook oficial da Milplacas">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M14 22v-9h3l.5-4H14V7c0-1.15.35-2 2-2h2V1.4A25 25 0 0 0 15 1c-3 0-5 1.8-5 5v3H7v4h3v9h4Z" />
+              </svg>
+            </a>
+            </div>
+          </div>
+        </div>
+        <div className="site-footer__bottom">
+          <p>© 2026 Milplacas. Todos os direitos reservados.</p>
         </div>
       </footer>
       </main>
+      <BackToTop />
     </>
   )
 }

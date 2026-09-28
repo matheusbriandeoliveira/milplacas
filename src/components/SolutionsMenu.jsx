@@ -2,16 +2,16 @@ import { useState } from 'react'
 import './SolutionsMenu.css'
 
 const solutions = [
-  'Fachadas em ACM',
-  'Pele de Vidro / Glazing',
-  'Esquadrias de Alumínio',
-  'Revestimentos',
-  'Comunicação Visual',
-  'Homenagens Corporativas',
+  { label: 'Fachadas em ACM', id: 'fachadas-em-acm' },
+  { label: 'Pele de Vidro / Glazing', id: 'pele-de-vidro' },
+  { label: 'Esquadrias de Alumínio', id: 'esquadrias-de-aluminio' },
+  { label: 'Comunicação Visual', id: 'comunicacao-visual' },
+  { label: 'Homenagens Corporativas', id: 'homenagens-corporativas' },
 ]
 
 export default function SolutionsMenu({ onNavigate }) {
   const [open, setOpen] = useState(false)
+  const pagePrefix = window.location.pathname.replace(/\/$/, '') === '/solucoes' ? '' : '/solucoes'
 
   return (
     <div className={`solutions-menu ${open ? 'is-open' : ''}`}
@@ -23,17 +23,18 @@ export default function SolutionsMenu({ onNavigate }) {
         if (event.key === 'Escape') {
           event.stopPropagation()
           setOpen(false)
-          event.currentTarget.querySelector('button').focus()
+          event.currentTarget.querySelector('.solutions-menu__trigger').focus()
         }
       }}>
-      <button type="button" className="solutions-menu__trigger" aria-expanded={open}
-        aria-controls="solutions-dropdown" onClick={() => setOpen((value) => !value)}>
+      <a href="/solucoes" className="solutions-menu__trigger" aria-expanded={open}
+        onFocus={() => setOpen(true)}
+        aria-controls="solutions-dropdown" onClick={() => { setOpen(false); onNavigate() }}>
         Soluções <span aria-hidden="true">⌄</span>
-      </button>
+      </a>
       <div className="solutions-menu__dropdown" id="solutions-dropdown" inert={!open}>
         {solutions.map((solution) => (
-          <a key={solution} href="#solucoes" onClick={() => { setOpen(false); onNavigate() }}>
-            {solution}
+          <a key={solution.id} href={`${pagePrefix}#${solution.id}`} onClick={() => { setOpen(false); onNavigate() }}>
+            {solution.label}
           </a>
         ))}
       </div>

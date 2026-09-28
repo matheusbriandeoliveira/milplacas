@@ -3,7 +3,7 @@ import './HeroSlider.css'
 
 const slides = ['/bcg1.png', '/bcg2.png', '/bcg3.png']
 
-export default function HeroSlider({ children, ready = true }) {
+export default function HeroSlider({ children, ready = true, projectsHref = '#projetos' }) {
   const [active, setActive] = useState(0)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function HeroSlider({ children, ready = true }) {
             <span className="anniversary-hero__years">anos</span>
             <span className="anniversary-hero__statement">Construindo<br /><em>referências.</em></span>
           </h1>
-          <a className="anniversary-hero__cta" href="#projetos">Ver projetos <span aria-hidden="true">→</span></a>
+          <a className="anniversary-hero__cta" href={projectsHref}>Ver projetos <span aria-hidden="true">→</span></a>
         </div>
         <div className="anniversary-hero__controls" aria-label="Navegação das imagens">
           <button type="button" onClick={() => move(-1)} aria-label="Imagem anterior">←</button>
