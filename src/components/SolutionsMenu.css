@@ -1,5 +1,5 @@
 .anniversary-hero .header__nav > a,
-.solutions-menu__trigger {
+.anniversary-hero .header__nav .solutions-menu__trigger {
   font-size: 0.9rem;
 }
 .solutions-menu { position: relative; }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import './App.css'
 import HeroSlider from './components/HeroSlider.jsx'
+import ResidentialHero from './components/ResidentialHero.jsx'
 import SolutionsSections from './components/SolutionsSections.jsx'
 import SolutionsMenu from './components/SolutionsMenu.jsx'
 import BlurText from './components/BlurText.jsx'
@@ -11,7 +12,7 @@ import BackToTop from './components/BackToTop.jsx'
 const navigation = [
   { label: 'Projetos', href: '#projetos' },
   { label: 'Clientes', href: '#clientes' },
-  { label: 'Residencial', href: '#projetos' },
+  { label: 'Residencial', href: '/residencial' },
 ]
 
 const featuredProjects = [
@@ -117,7 +118,9 @@ const smoothstep = (value) => {
 
 function App() {
   const isSolutionsPage = window.location.pathname.replace(/\/$/, '') === '/solucoes'
-  const homePrefix = isSolutionsPage ? '/' : ''
+  const isResidentialPage = window.location.pathname.replace(/\/$/, '') === '/residencial'
+  const homePrefix = isSolutionsPage || isResidentialPage ? '/' : ''
+  const PageHero = isResidentialPage ? ResidentialHero : HeroSlider
   const featuredProjectsRef = useRef(null)
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
   const [footerSolutionsOpen, setFooterSolutionsOpen] = useState(false)
@@ -136,7 +139,7 @@ function App() {
   }, [isSolutionsPage, isPreloaderVisible])
 
   useEffect(() => {
-    const minimumPreloaderTime = isSolutionsPage ? 500 : 2000
+    const minimumPreloaderTime = isSolutionsPage || isResidentialPage ? 500 : 2000
     const startedAt = performance.now()
     let frameId = 0
     let exitTimer = 0
@@ -166,7 +169,7 @@ function App() {
       window.clearTimeout(exitTimer)
       window.clearTimeout(fadeTimer)
     }
-  }, [isSolutionsPage])
+  }, [isSolutionsPage, isResidentialPage])
 
   useEffect(() => {
     const section = featuredProjectsRef.current
@@ -229,7 +232,7 @@ function App() {
       )}
 
       <main className="home" aria-busy={isPreloaderVisible}>
-      <HeroSlider ready={!isPreloaderVisible} projectsHref={`${homePrefix}#projetos`}>
+      <PageHero ready={!isPreloaderVisible} projectsHref={`${homePrefix}#projetos`}>
 
         <header className="header">
           <a className="header__brand" href={`${homePrefix}#inicio`} aria-label="Milplacas — início">
@@ -255,7 +258,7 @@ function App() {
             aria-label="Navegação principal"
           >
             {navigation.map((item) => (
-              <a href={`${homePrefix}${item.href}`} key={item.label} onClick={() => setIsMobileMenuOpen(false)}>
+              <a href={item.href.startsWith('#') ? `${homePrefix}${item.href}` : item.href} key={item.label} onClick={() => setIsMobileMenuOpen(false)}>
                 {item.label}
               </a>
             ))}
@@ -263,10 +266,10 @@ function App() {
           </nav>
         </header>
 
-      </HeroSlider>
+      </PageHero>
       {isSolutionsPage && <SolutionsSections />}
 
-      {!isSolutionsPage && <>
+      {!isSolutionsPage && !isResidentialPage && <>
       <section className="projects-showcase" aria-label="Projetos em destaque">
         <ScrollExpand
           src="/videoHero.mp4"

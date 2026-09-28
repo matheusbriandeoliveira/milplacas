@@ -54,6 +54,19 @@
 }
 
 .anniversary-hero__content h1 { margin: 0; font-weight: 500; }
+.residential-hero__title {
+  font-size: clamp(2.3rem, 3.8vw, 4.75rem);
+  letter-spacing: -0.055em;
+  line-height: 1.08;
+  max-width: 13ch;
+}
+.residential-hero__description {
+  margin: 1.75rem 0 0;
+  max-width: 34ch;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: clamp(0.95rem, 1.1vw, 1.1rem);
+  line-height: 1.65;
+}
 .anniversary-hero__number {
   display: block;
   font-size: clamp(7rem, 13vw, 16rem);
