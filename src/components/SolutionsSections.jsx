@@ -33,14 +33,15 @@ const services = [
   },
 ]
 
-export default function SolutionsSections() {
+export default function SolutionsSections({ items = services, title }) {
   return (
-    <section className="solutions-sections" aria-label="Soluções da Milplacas">
-      {services.map((service, index) => (
+    <section className="solutions-sections" aria-label={title || 'Soluções da Milplacas'}>
+      {title && <h2 className="solutions-sections__title">{title}</h2>}
+      {items.map((service, index) => (
         <article className="solution-block" id={service.id} key={service.id} aria-labelledby={`${service.id}-title`}>
           <div className="solution-block__info">
             <span className="solution-block__index" aria-hidden="true">0{index + 1} / SOLUÇÕES</span>
-            <h2 id={`${service.id}-title`}>{service.title}</h2>
+            {title ? <h3 id={`${service.id}-title`}>{service.title}</h3> : <h2 id={`${service.id}-title`}>{service.title}</h2>}
             <p>{service.description}</p>
           </div>
           <div className="solution-block__image">

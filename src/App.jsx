@@ -4,6 +4,7 @@ import './App.css'
 import HeroSlider from './components/HeroSlider.jsx'
 import ResidentialHero from './components/ResidentialHero.jsx'
 import SolutionsSections from './components/SolutionsSections.jsx'
+import ResidentialSections from './components/ResidentialSections.jsx'
 import SolutionsMenu from './components/SolutionsMenu.jsx'
 import BlurText from './components/BlurText.jsx'
 import ScrollExpand from './components/ScrollExpand.jsx'
@@ -268,6 +269,7 @@ function App() {
 
       </PageHero>
       {isSolutionsPage && <SolutionsSections />}
+      {isResidentialPage && <ResidentialSections />}
 
       {!isSolutionsPage && !isResidentialPage && <>
       <section className="projects-showcase" aria-label="Projetos em destaque">
