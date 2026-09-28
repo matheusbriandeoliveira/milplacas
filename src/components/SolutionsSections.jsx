@@ -1,4 +1,5 @@
 import './SolutionsSections.css'
+import BlurText from './BlurText.jsx'
 
 const services = [
   {
@@ -33,16 +34,20 @@ const services = [
   },
 ]
 
-export default function SolutionsSections({ items = services, title }) {
+export default function SolutionsSections({ items = services, title, titleHighlight }) {
   return (
     <section className="solutions-sections" aria-label={title || 'Soluções da Milplacas'}>
-      {title && <h2 className="solutions-sections__title">{title}</h2>}
+      {title && <h2 className="solutions-sections__title">
+        {titleHighlight && title.endsWith(titleHighlight)
+          ? <><BlurText text={title.slice(0, -titleHighlight.length).trim()} />{' '}<span className="solutions-sections__highlight"><BlurText text={titleHighlight} /></span></>
+          : <BlurText text={title} />}
+      </h2>}
       {items.map((service, index) => (
         <article className="solution-block" id={service.id} key={service.id} aria-labelledby={`${service.id}-title`}>
           <div className="solution-block__info">
             <span className="solution-block__index" aria-hidden="true">0{index + 1} / SOLUÇÕES</span>
-            {title ? <h3 id={`${service.id}-title`}>{service.title}</h3> : <h2 id={`${service.id}-title`}>{service.title}</h2>}
-            <p>{service.description}</p>
+            {title ? <h3 id={`${service.id}-title`}><BlurText text={service.title} /></h3> : <h2 id={`${service.id}-title`}><BlurText text={service.title} /></h2>}
+            <p><BlurText text={service.description} delay={20} /></p>
           </div>
           <div className="solution-block__image">
             <img src={service.image} alt={service.title} loading="lazy" decoding="async" />

@@ -11,6 +11,7 @@ export default function BlurText({
   rootMargin = '0px',
   className = '',
   onAnimationComplete,
+  enabled = true,
 }) {
   const ref = useRef(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -18,7 +19,7 @@ export default function BlurText({
 
   useEffect(() => {
     const element = ref.current
-    if (!element) return undefined
+    if (!element || !enabled) return undefined
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -31,7 +32,7 @@ export default function BlurText({
 
     observer.observe(element)
     return () => observer.disconnect()
-  }, [rootMargin, threshold])
+  }, [rootMargin, threshold, enabled])
 
   return (
     <span

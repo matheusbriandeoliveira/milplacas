@@ -34,5 +34,5 @@ const services = [
 ]
 
 export default function ResidentialSections() {
-  return <SolutionsSections title="Soluções Residenciais" items={services} />
+  return <SolutionsSections title="Soluções Residenciais" titleHighlight="Residenciais" items={services} />
 }
