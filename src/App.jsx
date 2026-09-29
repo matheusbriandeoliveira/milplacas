@@ -439,7 +439,7 @@ function App() {
         </div>
       </section>
 
-      <section className="faq" id="faq" aria-labelledby="faq-title">
+      <section className="faq" id="faq" aria-labelledby="faq-title" hidden>
         <div className="faq__inner">
           <div className="faq__intro">
             <p className="faq__label">Transparência de ponta a ponta</p>
