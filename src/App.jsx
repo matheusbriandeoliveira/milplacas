@@ -46,7 +46,7 @@ const clientLogos = [
   { name: 'Coca-Cola', image: '/images/clients/CocaCola.svg' },
   { name: 'Jacto', image: '/images/clients/Jacto.svg' },
   { name: 'Marilan', image: '/images/clients/Marilan.svg' },
-  { name: 'Boulevard Marília Shopping', image: '/images/clients/Boulevard Marília Shopping.svg' },
+  { name: 'Boulevard Marília Shopping', image: '/images/clients/boulevard-marilia-shopping.svg' },
   { name: 'Sesi', image: '/images/clients/Sesi.svg' },
   { name: 'Ribeiro Caram', image: '/images/clients/Ribeiro Caram.svg' },
   { name: 'Equinix', image: '/images/clients/Equinix.svg' },
