@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import './SolutionsSections.css'
 import BlurText from './BlurText.jsx'
 
@@ -34,9 +35,31 @@ const services = [
   },
 ]
 
-export default function SolutionsSections({ items = services, title, titleHighlight }) {
+export default function SolutionsSections({ items = services, title, titleHighlight, className = '', revealImages = false }) {
+  const sectionRef = useRef(null)
+
+  useEffect(() => {
+    const section = sectionRef.current
+    if (!section || !revealImages || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add('is-revealed')
+        observer.unobserve(entry.target)
+      })
+    }, { threshold: 0.12 })
+
+    section.classList.add('has-image-reveal')
+    section.querySelectorAll('.solution-block__image').forEach((image) => observer.observe(image))
+    return () => {
+      observer.disconnect()
+      section.classList.remove('has-image-reveal')
+    }
+  }, [revealImages, items])
+
   return (
-    <section className="solutions-sections" aria-label={title || 'Soluções da Milplacas'}>
+    <section className={`solutions-sections ${className}`.trim()} ref={sectionRef} aria-label={title || 'Soluções da Milplacas'}>
       {title && <h2 className="solutions-sections__title">
         {titleHighlight && title.endsWith(titleHighlight)
           ? <><BlurText text={title.slice(0, -titleHighlight.length).trim()} />{' '}<span className="solutions-sections__highlight"><BlurText text={titleHighlight} /></span></>

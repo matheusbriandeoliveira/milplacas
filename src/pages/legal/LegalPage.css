@@ -1,0 +1,131 @@
+.anniversary-hero.legal-header {
+  min-height: 0;
+  background: #090909;
+}
+
+.legal-header > .header {
+  position: relative;
+}
+
+.legal-header::after {
+  display: none;
+}
+
+.legal-page {
+  padding: clamp(3.5rem, 7vw, 7rem) clamp(1.5rem, 5vw, 6rem);
+  background: #f8f8f6;
+  color: #222;
+}
+
+.legal-page__inner {
+  width: min(100%, 52rem);
+  margin-inline: auto;
+}
+
+.legal-page__eyebrow {
+  margin: 0 0 1.25rem;
+  color: #b33830;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.legal-page h1 {
+  margin: 0;
+  font-size: var(--type-section);
+  font-weight: 450;
+  letter-spacing: -0.045em;
+  line-height: var(--leading-title);
+}
+
+.legal-page__intro {
+  max-width: var(--description-measure);
+  margin-top: 1.5rem;
+  color: #626260;
+}
+
+.legal-page p,
+.legal-page td,
+.legal-page th {
+  font-size: var(--type-body);
+  line-height: var(--leading-body);
+}
+
+.legal-page .legal-page__date {
+  color: #626260;
+  font-size: 0.8125rem;
+}
+
+.legal-page__section {
+  margin-top: 2.75rem;
+}
+
+.legal-page h2 {
+  margin: 0 0 1rem;
+  font-size: var(--type-card);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.legal-page__section p {
+  margin: 1rem 0 0;
+  color: #626260;
+}
+
+.legal-page a {
+  color: #ac3028;
+  text-underline-offset: 0.2em;
+  overflow-wrap: anywhere;
+}
+
+.legal-page a:hover {
+  color: #222;
+}
+
+.legal-page a:focus-visible,
+.legal-page__table-scroll:focus-visible {
+  outline: 2px solid #b33830;
+  outline-offset: 4px;
+}
+
+.legal-page__table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.legal-page table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.legal-page caption {
+  margin-bottom: 0.75rem;
+  color: #626260;
+  font-size: 0.8125rem;
+  text-align: left;
+}
+
+.legal-page th,
+.legal-page td {
+  padding: 0.85rem;
+  border-bottom: 1px solid #deded9;
+  vertical-align: top;
+}
+
+.legal-page th {
+  font-weight: 600;
+}
+
+.legal-page__related {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #deded9;
+  font-size: var(--type-small);
+}

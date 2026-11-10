@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './HeroSlider.css'
 import BlurText from './BlurText.jsx'
 
-const defaultSlides = ['/images/hero/bcg1.png', '/images/hero/bcg2.png', '/images/hero/bcg3.png']
+const defaultSlides = ['/images/hero/bcg3.png', '/images/hero/bcg1.png', '/images/hero/bcg2.png']
 
 export default function HeroSlider({ children, ready = true, projectsHref = '#projetos', slides = defaultSlides, residential = false }) {
   const [active, setActive] = useState(0)
@@ -30,10 +30,11 @@ export default function HeroSlider({ children, ready = true, projectsHref = '#pr
             <h1 id="hero-title" className="residential-hero__title"><BlurText text="Soluções que valorizam o seu espaço." enabled={ready} /></h1>
             <p className="residential-hero__description"><BlurText text="Esquadrias, vidros e soluções arquitetônicas que unem funcionalidade, conforto e um acabamento de alto padrão para projetos residenciais." delay={20} enabled={ready} /></p>
           </> : <>
-          <h1 id="hero-title">
+          <h1 id="hero-title" className="anniversary-hero__lockup">
             <span className="anniversary-hero__number"><BlurText text="26" enabled={ready} /></span>
             <span className="anniversary-hero__years"><BlurText text="anos" enabled={ready} /></span>
-            <span className="anniversary-hero__statement"><BlurText text="Construindo" enabled={ready} /><br /><em><BlurText text="referências." enabled={ready} /></em></span>
+            <span className="anniversary-hero__divider" aria-hidden="true" />
+            <span className="anniversary-hero__statement"><BlurText text="Construindo" enabled={ready} /><br /><em><BlurText text="Referências." enabled={ready} /></em></span>
           </h1>
           <a className="anniversary-hero__cta" href={projectsHref}>Ver projetos <span aria-hidden="true">→</span></a>
           </>}

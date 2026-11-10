@@ -11,7 +11,8 @@ const solutions = [
 
 export default function SolutionsMenu({ onNavigate }) {
   const [open, setOpen] = useState(false)
-  const pagePrefix = window.location.pathname.replace(/\/$/, '') === '/solucoes' ? '' : '/solucoes'
+  const pathname = typeof window === 'undefined' ? '' : window.location.pathname
+  const pagePrefix = pathname.replace(/\/$/, '') === '/solucoes' ? '' : '/solucoes'
 
   return (
     <div className={`solutions-menu ${open ? 'is-open' : ''}`}
@@ -29,7 +30,9 @@ export default function SolutionsMenu({ onNavigate }) {
       <a href="/solucoes" className="solutions-menu__trigger" aria-expanded={open}
         onFocus={() => setOpen(true)}
         aria-controls="solutions-dropdown" onClick={() => { setOpen(false); onNavigate() }}>
-        Soluções <span aria-hidden="true">⌄</span>
+        Soluções <svg className="solutions-menu__chevron" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+          <path d="m3 5 4 4 4-4" />
+        </svg>
       </a>
       <div className="solutions-menu__dropdown" id="solutions-dropdown" inert={!open}>
         {solutions.map((solution) => (

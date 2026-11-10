@@ -2,19 +2,18 @@ import { useEffect, useRef, useState } from 'react'
 
 import './App.css'
 import HeroSlider from './components/HeroSlider.jsx'
-import ResidentialHero from './components/ResidentialHero.jsx'
 import SolutionsSections from './components/SolutionsSections.jsx'
-import ResidentialSections from './components/ResidentialSections.jsx'
-import SolutionsMenu from './components/SolutionsMenu.jsx'
+import { ResidentialHero, ResidentialSections } from './pages/residencial/index.jsx'
+import SiteHeader from './components/SiteHeader.jsx'
+import SiteFooter from './components/SiteFooter.jsx'
+import LegalPage from './pages/legal/LegalPage.jsx'
+import { legalPages } from './pages/legal/content.js'
 import BlurText from './components/BlurText.jsx'
 import ScrollExpand from './components/ScrollExpand.jsx'
 import BackToTop from './components/BackToTop.jsx'
+import FloatingWhatsApp from './components/FloatingWhatsApp.jsx'
+import AboutSection from './components/AboutSection.jsx'
 
-const navigation = [
-  { label: 'Projetos', href: '#projetos' },
-  { label: 'Clientes', href: '#clientes' },
-  { label: 'Residencial', href: '/residencial' },
-]
 
 const featuredProjects = [
   {
@@ -118,17 +117,18 @@ const smoothstep = (value) => {
 }
 
 function App() {
+  const isHomePage = window.location.pathname.replace(/\/$/, '') === ''
   const isSolutionsPage = window.location.pathname.replace(/\/$/, '') === '/solucoes'
   const isResidentialPage = window.location.pathname.replace(/\/$/, '') === '/residencial'
-  const homePrefix = isSolutionsPage || isResidentialPage ? '/' : ''
+  const legalPage = legalPages.find((page) => page.path === window.location.pathname.replace(/\/$/, ''))
+  const homePrefix = isSolutionsPage || isResidentialPage || legalPage ? '/' : ''
   const PageHero = isResidentialPage ? ResidentialHero : HeroSlider
   const featuredProjectsRef = useRef(null)
   const [openFaqIndex, setOpenFaqIndex] = useState(null)
-  const [footerSolutionsOpen, setFooterSolutionsOpen] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeClientIndex, setActiveClientIndex] = useState(null)
-  const [isPreloaderVisible, setIsPreloaderVisible] = useState(true)
+  const [isPreloaderVisible, setIsPreloaderVisible] = useState(() => !legalPage && (isHomePage || document.readyState !== 'complete'))
   const [isPreloaderLeaving, setIsPreloaderLeaving] = useState(false)
+
 
   useEffect(() => {
     if (!isSolutionsPage || isPreloaderVisible || !window.location.hash) return
@@ -140,7 +140,8 @@ function App() {
   }, [isSolutionsPage, isPreloaderVisible])
 
   useEffect(() => {
-    const minimumPreloaderTime = isSolutionsPage || isResidentialPage ? 500 : 2000
+    if (legalPage) return undefined
+    const minimumPreloaderTime = isHomePage ? 2000 : 0
     const startedAt = performance.now()
     let frameId = 0
     let exitTimer = 0
@@ -154,6 +155,10 @@ function App() {
     }
 
     const finishLoading = () => {
+      if (!isHomePage) {
+        setIsPreloaderVisible(false)
+        return
+      }
       const elapsed = performance.now() - startedAt
       exitTimer = window.setTimeout(startExit, Math.max(0, minimumPreloaderTime - elapsed))
     }
@@ -169,6 +174,24 @@ function App() {
       cancelAnimationFrame(frameId)
       window.clearTimeout(exitTimer)
       window.clearTimeout(fadeTimer)
+    }
+  }, [isHomePage, legalPage])
+
+  useEffect(() => {
+    const section = featuredProjectsRef.current
+    if (!section) return undefined
+
+    // Pin only after the entire projects grid has scrolled into view.
+    const updateStickyTop = () => {
+      section.style.setProperty('--projects-sticky-top', `${Math.min(0, window.innerHeight - section.offsetHeight)}px`)
+    }
+    const observer = new ResizeObserver(updateStickyTop)
+    observer.observe(section)
+    window.addEventListener('resize', updateStickyTop)
+    updateStickyTop()
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('resize', updateStickyTop)
     }
   }, [isSolutionsPage, isResidentialPage])
 
@@ -233,45 +256,20 @@ function App() {
       )}
 
       <main className="home" aria-busy={isPreloaderVisible}>
-      <PageHero ready={!isPreloaderVisible} projectsHref={`${homePrefix}#projetos`}>
+      {legalPage ? <>
+        <div className="anniversary-hero legal-header" id="inicio">
+          <SiteHeader homePrefix="/" />
+        </div>
+        <LegalPage page={legalPage} />
+      </> : <PageHero ready={!isPreloaderVisible} projectsHref={`${homePrefix}#projetos`}>
 
-        <header className="header">
-          <a className="header__brand" href={`${homePrefix}#inicio`} aria-label="Milplacas — início">
-            <img src="/brand/LogoMilplacasWeb.svg" alt="Milplacas" />
-          </a>
+        <SiteHeader homePrefix={homePrefix} />
 
-          <button
-            type="button"
-            className={`header__menu-button ${isMobileMenuOpen ? 'is-open' : ''}`}
-            aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-navigation"
-            onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
-          >
-            <span />
-            <span />
-            <span />
-          </button>
-
-          <nav
-            className={`header__nav ${isMobileMenuOpen ? 'is-open' : ''}`}
-            id="mobile-navigation"
-            aria-label="Navegação principal"
-          >
-            {navigation.map((item) => (
-              <a href={item.href.startsWith('#') ? `${homePrefix}${item.href}` : item.href} key={item.label} onClick={() => setIsMobileMenuOpen(false)}>
-                {item.label}
-              </a>
-            ))}
-            <SolutionsMenu onNavigate={() => setIsMobileMenuOpen(false)} />
-          </nav>
-        </header>
-
-      </PageHero>
+      </PageHero>}
       {isSolutionsPage && <SolutionsSections />}
       {isResidentialPage && <ResidentialSections />}
 
-      {!isSolutionsPage && !isResidentialPage && <>
+      {!isSolutionsPage && !isResidentialPage && !legalPage && <>
       <section className="projects-showcase" aria-label="Projetos em destaque">
         <ScrollExpand
           src="/videos/videoHero.mp4"
@@ -292,6 +290,9 @@ function App() {
         />
       </section>
 
+      <AboutSection />
+
+      <div className="projects-clients-transition">
       <section
         className="featured-projects"
         id="projetos"
@@ -360,10 +361,11 @@ function App() {
         </div>
       </section>
 
+      </div>
+
       <section className="structure" id="solucoes" aria-labelledby="structure-title">
         <div className="structure__inner">
           <div className="structure__intro">
-            <p className="structure__label">Nossa estrutura</p>
             <h2 id="structure-title">
               <BlurText text="Estrutura, Tecnologia e Experiência para" /><em><BlurText text="Grandes Projetos." /></em>
             </h2>
@@ -480,70 +482,10 @@ function App() {
 
       </>}
 
-      <footer className="site-footer">
-        <div className="site-footer__inner">
-          <div className="site-footer__brand">
-            <img src="/brand/LogoMilplacasWeb.svg" alt="Milplacas" />
-          </div>
-
-          <nav className={`site-footer__column site-footer__solutions${footerSolutionsOpen ? ' is-open' : ''}`} aria-labelledby="footer-solutions-title">
-            <h2 id="footer-solutions-title">Soluções</h2>
-            <button className="site-footer__solutions-toggle" type="button"
-              aria-expanded={footerSolutionsOpen} aria-controls="footer-solutions-links"
-              onClick={() => setFooterSolutionsOpen((value) => !value)}>
-              Soluções <span aria-hidden="true">{footerSolutionsOpen ? '−' : '+'}</span>
-            </button>
-            <div className="site-footer__solutions-links" id="footer-solutions-links">
-            <a href="/solucoes#fachadas-em-acm">Fachadas em ACM</a>
-            <a href="/solucoes#pele-de-vidro">Pele de Vidro / Glazing</a>
-            <a href="/solucoes#esquadrias-de-aluminio">Esquadrias de Alumínio</a>
-            <a href="/solucoes#comunicacao-visual">Comunicação Visual</a>
-            <a href="/solucoes#homenagens-corporativas">Homenagens Corporativas</a>
-            </div>
-          </nav>
-
-          <div className="site-footer__column">
-            <h2>Contato</h2>
-          <a
-            className="site-footer__contact"
-            href="https://wa.me/5514997192223"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Falar com a Milplacas pelo WhatsApp: (14) 99719-2223"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M20.5 3.5A11.84 11.84 0 0 0 12.04 0C5.46 0 .11 5.35.11 11.94c0 2.1.55 4.15 1.59 5.96L0 24l6.27-1.64a11.92 11.92 0 0 0 5.76 1.47h.01c6.58 0 11.94-5.35 11.94-11.94 0-3.19-1.24-6.18-3.48-8.39ZM12.04 21.81h-.01a9.88 9.88 0 0 1-5.04-1.38l-.36-.21-3.72.97.99-3.63-.24-.37a9.88 9.88 0 0 1-1.52-5.26c0-5.47 4.45-9.92 9.92-9.92 2.65 0 5.14 1.03 7.01 2.9a9.85 9.85 0 0 1 2.9 7c0 5.47-4.45 9.92-9.92 9.92Zm5.44-7.43c-.3-.15-1.78-.88-2.05-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.95 1.18-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47a9.04 9.04 0 0 1-1.66-2.06c-.17-.3-.02-.47.13-.62.14-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.68-1.63-.93-2.23-.24-.58-.49-.5-.68-.51h-.58c-.2 0-.52.08-.8.38-.27.3-1.05 1.03-1.05 2.5 0 1.48 1.08 2.9 1.23 3.1.15.2 2.12 3.24 5.14 4.55.72.31 1.28.5 1.72.64.72.23 1.37.2 1.88.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.07-.13-.27-.2-.57-.35Z" />
-            </svg>
-            <span>(14) 99719-2223</span>
-          </a>
-          </div>
-
-          <div className="site-footer__column">
-            <h2>Redes Sociais</h2>
-            <div className="site-footer__social-links">
-            <a className="site-footer__instagram" href="https://www.instagram.com/mil.placas.oficial/"
-              target="_blank" rel="noopener noreferrer" aria-label="Instagram oficial da Milplacas">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
-            <a className="site-footer__facebook" href="https://www.facebook.com/milplacasoficial/"
-              target="_blank" rel="noopener noreferrer" aria-label="Facebook oficial da Milplacas">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M14 22v-9h3l.5-4H14V7c0-1.15.35-2 2-2h2V1.4A25 25 0 0 0 15 1c-3 0-5 1.8-5 5v3H7v4h3v9h4Z" />
-              </svg>
-            </a>
-            </div>
-          </div>
-        </div>
-        <div className="site-footer__bottom">
-          <p>© 2026 Milplacas. Todos os direitos reservados.</p>
-        </div>
-      </footer>
+      <SiteFooter />
       </main>
       <BackToTop />
+      <FloatingWhatsApp />
     </>
   )
 }
