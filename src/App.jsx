@@ -177,23 +177,6 @@ function App() {
     }
   }, [isHomePage, legalPage])
 
-  useEffect(() => {
-    const section = featuredProjectsRef.current
-    if (!section) return undefined
-
-    // Pin only after the entire projects grid has scrolled into view.
-    const updateStickyTop = () => {
-      section.style.setProperty('--projects-sticky-top', `${Math.min(0, window.innerHeight - section.offsetHeight)}px`)
-    }
-    const observer = new ResizeObserver(updateStickyTop)
-    observer.observe(section)
-    window.addEventListener('resize', updateStickyTop)
-    updateStickyTop()
-    return () => {
-      observer.disconnect()
-      window.removeEventListener('resize', updateStickyTop)
-    }
-  }, [isSolutionsPage, isResidentialPage])
 
   useEffect(() => {
     const section = featuredProjectsRef.current
@@ -292,7 +275,6 @@ function App() {
 
       <AboutSection />
 
-      <div className="projects-clients-transition">
       <section
         className="featured-projects"
         id="projetos"
@@ -361,8 +343,6 @@ function App() {
         </div>
       </section>
 
-      </div>
-
       <section className="structure" id="solucoes" aria-labelledby="structure-title">
         <div className="structure__inner">
           <div className="structure__intro">
@@ -412,7 +392,7 @@ function App() {
 
           <div className="final-cta__contact">
             <p>
-              <strong>Conte sobre o seu projeto.</strong><br />
+              <strong>Conte sobre o seu projeto.</strong>
               <strong>Nossa equipe ajuda a transformar a necessidade em uma solução técnica completa.</strong>
             </p>
             <a
