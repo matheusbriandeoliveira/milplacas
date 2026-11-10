@@ -1,4 +1,3 @@
-
 name: Deploy Milplacas
 
 on:
@@ -38,7 +37,6 @@ jobs:
           security: strict
           local-dir: ./dist/
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          dry-run: true
           exclude: |
             **/.git*
             **/.git*/**
